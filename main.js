@@ -1,26 +1,40 @@
 const button = document.querySelector(".button_main_wrap.is-bubble");
 
-function animateBubble(button, e) {
-  const bubble = button.querySelector(".button_main_circle");
-  const rect = button.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
+if (button) {
+  let buttonCurrentlyAnimating = false;
 
-  bubble.style.left = `${x}px`;
-  bubble.style.top = `${y}px`;
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
 
-  bubble.classList.add("animate");
+  async function animateBubble(button, e) {
+    buttonCurrentlyAnimating = true;
+    const bubble = button.querySelector(".button_main_circle");
+    const rect = button.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    bubble.style.left = `${x}px`;
+    bubble.style.top = `${y}px`;
+
+    bubble.classList.add("animate");
+    await sleep(500);
+    buttonCurrentlyAnimating = false;
+  }
+
+  async function unanimateBubble(button) {
+    while (buttonCurrentlyAnimating) {
+      await sleep(50);
+    }
+    const bubble = button.querySelector(".button_main_circle");
+    bubble.classList.remove("animate");
+  }
+
+  button.addEventListener("mouseenter", (e) => {
+    animateBubble(e.currentTarget, e);
+  });
+
+  button.addEventListener("mouseleave", (e) => {
+    unanimateBubble(e.currentTarget);
+  });
 }
-
-function unanimateBubble(button) {
-  const bubble = button.querySelector(".button_main_circle");
-  bubble.classList.remove("animate");
-}
-
-button.addEventListener("mouseenter", (e) => {
-  animateBubble(e.currentTarget, e);
-});
-
-button.addEventListener("mouseleave", (e) => {
-  unanimateBubble(e.currentTarget);
-});
