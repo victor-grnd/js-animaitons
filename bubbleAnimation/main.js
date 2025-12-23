@@ -51,16 +51,15 @@ class BubbleButton {
 
     // Animer le scale
     this.bubble.style.transform = "scale(9)";
-    this.bubble.style.opacity = "1";
 
-    await this.sleep(300);
+    await this.sleep(150);
     this.isAnimating = false;
   }
 
   async animateBubbleOut(e) {
     // Attendre que l'animation d'entrée se termine
     while (this.isAnimating) {
-      await this.sleep(50);
+      await this.sleep(25);
     }
 
     const { x, y } = this.getXY(e); // x et y = coordonées de la mouse quand elle sort
@@ -81,7 +80,6 @@ class BubbleButton {
 
     // Rétrécir la bulle
     this.bubble.style.transform = "scale(0)";
-    this.bubble.style.opacity = "0";
   }
 
   handleMouseMove(e) {
