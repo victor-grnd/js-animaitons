@@ -20,8 +20,11 @@ function initAppleButtons() {
         y: "-250%",
         duration: 0.5,
       });
-      appleButtonTimeline.to(
+      appleButtonTimeline.fromTo(
         buttonAppleLogo,
+        {
+          y: "200%",
+        },
         {
           y: "-50%",
           duration: 0.5,
