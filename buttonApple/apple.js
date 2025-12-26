@@ -1,48 +1,51 @@
-// -----------------APPLE BUTTON ANIMATION----------------
-
 function initAppleButtons() {
   const appleButtons = document.querySelectorAll(
     ".button_main_element.is-apple"
   );
   if (!appleButtons.length) return;
 
-  function createAppleAnimations(buttons) {
-    buttons.forEach((button) => {
-      const buttonAppleText = button.querySelector(
-        ".button_main_text.is-apple"
-      );
-      const buttonAppleLogo = button.querySelector(".btn_apple_icon");
+  appleButtons.forEach((button) => {
+    let isAnimating = false;
 
-      if (!buttonAppleText || !buttonAppleLogo) return;
+    const buttonAppleText = button.querySelector(".button_main_text.is-apple");
+    const buttonAppleLogo = button.querySelector(".btn_apple_icon");
 
-      const appleButtonTimeline = gsap.timeline({ paused: true });
-      appleButtonTimeline.to(buttonAppleText, {
-        y: "-225%",
-        duration: 0.3,
-      });
-      appleButtonTimeline.fromTo(
-        buttonAppleLogo,
-        {
-          y: "200%",
-        },
-        {
-          y: "-50%",
-          duration: 0.3,
-        },
-        "<"
-      );
+    if (!buttonAppleText || !buttonAppleLogo) return;
 
-      button.addEventListener("mouseenter", () => {
-        appleButtonTimeline.play();
-      });
-
-      button.addEventListener("mouseleave", () => {
-        appleButtonTimeline.reverse();
-      });
+    const appleButtonTimeline = gsap.timeline({
+      paused: true,
+      onComplete: () => {
+        isAnimating = false;
+      },
+      onReverseComplete: () => {
+        isAnimating = false;
+      },
     });
-  }
 
-  createAppleAnimations(appleButtons);
+    appleButtonTimeline.to(buttonAppleText, {
+      y: "-225%",
+      duration: 0.3,
+    });
+
+    appleButtonTimeline.fromTo(
+      buttonAppleLogo,
+      { y: "200%" },
+      { y: "-50%", duration: 0.3 },
+      "<"
+    );
+
+    button.addEventListener("mouseenter", () => {
+      if (isAnimating) return;
+      isAnimating = true;
+      appleButtonTimeline.play();
+    });
+
+    button.addEventListener("mouseleave", () => {
+      if (isAnimating) return;
+      isAnimating = true;
+      appleButtonTimeline.reverse();
+    });
+  });
 }
 
 initAppleButtons();
