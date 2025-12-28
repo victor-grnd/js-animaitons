@@ -14,22 +14,36 @@ buttons.forEach((button) => {
   const layersHoverTl = gsap.timeline({ paused: true });
 
   layersHoverTl.to(
-    firstLayer,
+    roundedBg,
     {
-      yPercent: -100,
-      duration: 0.5,
-      ease: "power2.out",
+      yPercent: -65, // y 20 to -50
+      duration: 0.4,
+      ease: "power2.in",
     },
     0
   );
   layersHoverTl.to(
-    secondLayer,
+    firstLayer,
     {
-      yPercent: -150,
-      duration: 0.5,
+      yPercent: -100,
+      duration: 0.3,
       ease: "power2.out",
     },
-    ">-0.25"
+    ">-0.2"
+  );
+  layersHoverTl.fromTo(
+    secondLayer,
+    {
+      opacity: 0,
+      yPercent: 0,
+    },
+    {
+      yPercent: -150, // y 100 to -50
+      opacity: 1,
+      duration: 0.1,
+      ease: "power2.in",
+    },
+    0.25
   );
 
   button.addEventListener("mouseenter", () => {
