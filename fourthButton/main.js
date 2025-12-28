@@ -13,30 +13,24 @@ buttons.forEach((button) => {
 
   const layersHoverTl = gsap.timeline({ paused: true });
 
+  layersHoverTl.to(firstLayer, {
+    yPercent: -100,
+    duration: 0.3,
+    ease: "power2.out",
+  });
+
   layersHoverTl.to(
     roundedBg,
     {
       yPercent: -65, // y 20 to -50
-      duration: 0.4,
+      duration: 0.6,
       ease: "power2.in",
     },
-    0
+    "<-0.15"
   );
+
   layersHoverTl.to(
-    firstLayer,
-    {
-      yPercent: -100,
-      duration: 0.3,
-      ease: "power2.out",
-    },
-    ">-0.2"
-  );
-  layersHoverTl.fromTo(
     secondLayer,
-    {
-      opacity: 0,
-      yPercent: 0,
-    },
     {
       yPercent: -150, // y 100 to -50
       opacity: 1,
