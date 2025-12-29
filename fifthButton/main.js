@@ -1,34 +1,36 @@
 const fifthsButtons = document.querySelectorAll(".button_main_wrap.is-fifth");
 
 fifthsButtons.forEach((button) => {
-  const text = button.querySelector(".fifth_main_text");
+  const textAbove = button.querySelector(".fifth_main_text:not(.is-below)");
+  const textBelow = button.querySelector(".fifth_main_text.is-below");
   const arrow = button.querySelector(".u-svg");
 
-  if (!text || !arrow) {
+  if (!textAbove || !textBelow || !arrow) {
     return;
   }
 
   function initTextSplit(text) {
-    const textSplited = SplitText.create(text, {
+    const textSplit = SplitText.create(text, {
       type: "chars",
-      mask: "chars",
     });
 
-    return textSplited.chars;
+    return textSplit.chars;
   }
 
-  const textSplited = initTextSplit(text);
+  const textAboveSplited = initTextSplit(textAbove);
+  const textBelowSplited = initTextSplit(textBelow);
 
-  const timeline = gsap.timeline({ paused: true });
-
-  timeline.fromTo(
-    textSplited,
-    {
-      yPercent: 0,
+  const timeline = gsap.timeline({
+    paused: true,
+    defaults: {
+      ease: "power1.out",
     },
+  });
+
+  timeline.to(
+    textAboveSplited,
     {
       yPercent: -100,
-      ease: "power1.out",
       duration: 0.3,
       stagger: {
         amount: 0.2,
@@ -38,32 +40,26 @@ fifthsButtons.forEach((button) => {
   );
 
   timeline.fromTo(
-    textSplited,
+    textBelowSplited,
     {
       yPercent: 100,
     },
     {
-      yPercent: 0,
-      ease: "power1.out",
+      yPercent: -100,
       duration: 0.3,
       stagger: {
         amount: 0.2,
       },
     },
-    0.13
+    0.1
   );
 
-  timeline.fromTo(
+  timeline.to(
     arrow,
-    {
-      yPercent: 0,
-    },
-
     {
       xPercent: 100,
       yPercent: -100,
-      ease: "power1.out",
-      duration: 0.5,
+      duration: 0.3,
     },
     0
   );
@@ -77,10 +73,10 @@ fifthsButtons.forEach((button) => {
     {
       xPercent: 0,
       yPercent: 0,
-      ease: "power1.out",
       duration: 0.5,
+      immediateRender: false,
     },
-    0.21
+    0.2
   );
 
   button.addEventListener("mouseenter", () => {
