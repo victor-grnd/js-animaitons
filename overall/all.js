@@ -1,3 +1,5 @@
+//-----------------------------BUBBLE BUTTON-----------------------------
+
 class BubbleButton {
   constructor(buttonElement) {
     this.button = buttonElement;
@@ -105,16 +107,13 @@ class BubbleButton {
   }
 }
 
-// Initialiser tous les boutons avec la classe .is-bubble
-document.addEventListener("DOMContentLoaded", () => {
-  const buttons = document.querySelectorAll(".button_main_wrap.is-bubble");
+const bubbleButtons = document.querySelectorAll(".button_main_wrap.is-bubble");
 
-  buttons.forEach((button) => {
-    new BubbleButton(button);
-  });
+bubbleButtons.forEach((button) => {
+  new BubbleButton(button);
 });
 
-//-----------------------SHADOW CLASS-------------------
+//-----------------------SHADOW BUTTON-------------------
 
 class shadowButton {
   constructor(button) {
@@ -152,14 +151,12 @@ class shadowButton {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const buttons = document.querySelectorAll(".button_main_wrap.is-shadow");
+const shadowButtons = document.querySelectorAll(".button_main_wrap.is-shadow");
 
-  buttons.forEach((button) => {
-    new shadowButton(button);
-  });
+shadowButtons.forEach((button) => {
+  new shadowButton(button);
 });
-//---------------APPLE BUTTON ANIMATION---------------------
+//----------------------APPLE BUTTON ANIMATION---------------------
 
 const appleButtons = document.querySelectorAll(".button_main_wrap.is-apple");
 
