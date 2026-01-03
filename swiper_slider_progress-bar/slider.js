@@ -1,4 +1,4 @@
-const SLIDE_DURATION = 5;
+const SLIDE_DURATION = 3;
 let progressTween = null;
 let activeIndex = 0;
 
@@ -14,12 +14,17 @@ const inactiveClass = "is-inactive";
 
 const mainSwiper = new Swiper(".slider-sect_slider_wrap.swiper", {
   slidesPerView: 1,
-  allowTouchMove: true, // on peut controller le slider avec des controllers + a ask
+  allowTouchMove: true, // the slider can be controlled by fingers gestures
   autoplay: {
     delay: SLIDE_DURATION * 1000,
-    disableOnInteraction: false, // autoplay ne se reset pas au cghangement de each slide + a ask too
+    disableOnInteraction: false, // autoplay don't resset
   },
   effect: "fade",
+  speed: 200, // duration of the slides change transtion
+
+  fadeEffect: {
+    crossFade: true, // the slides fade at the sime time and the first doesn't have to wait for the second to be done
+  },
 
   on: {
     slideChange: () => {
@@ -63,11 +68,11 @@ function updatePaginationClassesAndBars() {
   });
 
   paginationsItems.forEach((item, index) => {
-    item.classList.remove("is-active", "is-inactive");
+    item.classList.remove(activeClass, inactiveClass);
     if (index === activeIndex) {
-      item.classList.add("is-active");
+      item.classList.add(activeClass);
     } else {
-      item.classList.add("is-inactive");
+      item.classList.add(inactiveClass);
     }
   });
 }
