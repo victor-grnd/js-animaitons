@@ -38,7 +38,7 @@ const mainSwiper = new Swiper("[data-slider-2='slider']", {
 
 function generateInnerHtml(paginaitonLabel) {
   const innerHtml = `
-    <div class="slider-sect_slider_label u-text-style-h3">${paginaitonLabel}</div>`;
+    <div class="slider-sect_slider_label u-text-style-main">${paginaitonLabel}</div>`;
   return innerHtml;
 }
 

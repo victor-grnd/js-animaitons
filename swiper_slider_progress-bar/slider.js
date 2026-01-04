@@ -2,22 +2,20 @@ const SLIDE_DURATION = 3;
 let progressTween = null;
 let activeIndex = 0;
 
-const slides = document.querySelectorAll(
-  ".slider-sect_slider_slide.swiper-slide"
-);
+const slides = document.querySelectorAll("[data-slider-1='slide']");
 const paginationWrapper = document.querySelector(
-  ".slider-sect_slider_pagination"
+  "[data-slider-1='pagination']"
 );
 
 const activeClass = "is-active";
 const inactiveClass = "is-inactive";
 
-const mainSwiper = new Swiper(".slider-sect_slider_wrap.swiper", {
+const mainSwiper = new Swiper("[data-slider-1='slider']", {
   slidesPerView: 1,
   allowTouchMove: true, // the slider can be controlled by fingers gestures
   autoplay: {
     delay: SLIDE_DURATION * 1000,
-    disableOnInteraction: false, // autoplay don't resset
+    disableOnInteraction: false, // autoplay don't rest on slide change
   },
   effect: "fade",
   speed: 200, // duration of the slides change transtion
@@ -37,19 +35,22 @@ const mainSwiper = new Swiper(".slider-sect_slider_wrap.swiper", {
 
 function generateInnerHtml(paginaitonLabel) {
   const innerHtml = ` <div class="slider-sect_slider_pagination-bar">
-      <div class="slider-sect_slider_progress"></div>
+      <div class="slider-sect_slider_progress" data-slider-1='bar'></div>
     </div>
-    <div class="slider-sect_slider_label u-text-style-h3">${paginaitonLabel}</div>`;
+    <div class="slider-sect_slider_label u-text-style-main">${paginaitonLabel}</div>`;
   return innerHtml;
 }
 
 function initPaginationItems(slides) {
   slides.forEach((slide, index) => {
     const paginationItem = document.createElement("div");
-    const paginationLabel = slide.dataset.label;
+    paginationItem.setAttribute("data-slider-1", "pagination-item");
     paginationItem.classList.add("slider-sect_slider_pagination-item");
-    paginationItem.dataset.index = index;
+    const paginationLabel = slide.dataset.label;
     paginationItem.innerHTML = generateInnerHtml(paginationLabel);
+
+    paginationItem.dataset.index = index;
+
     paginationWrapper.appendChild(paginationItem);
 
     paginationItem.addEventListener("click", () => {
@@ -60,10 +61,10 @@ function initPaginationItems(slides) {
 
 function updatePaginationClassesAndBars() {
   const paginationsItems = document.querySelectorAll(
-    ".slider-sect_slider_pagination-item"
+    "[data-slider-1='pagination-item']"
   );
 
-  document.querySelectorAll(".slider-sect_slider_progress").forEach((bar) => {
+  document.querySelectorAll("[data-slider-1='bar']").forEach((bar) => {
     bar.style.height = "0%";
   });
 
@@ -79,7 +80,7 @@ function updatePaginationClassesAndBars() {
 
 function startProgress(index) {
   const barToFill = document.querySelector(
-    `.slider-sect_slider_pagination-item[data-index="${index}"] .slider-sect_slider_progress`
+    `[data-slider-1='pagination-item'][data-index="${index}"] [data-slider-1='bar']`
   );
 
   if (!barToFill) return;
