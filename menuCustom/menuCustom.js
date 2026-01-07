@@ -28,8 +28,8 @@ menuItems.forEach((item) => {
       upperText,
       {
         yPercent: -125,
-        duration: 0.2,
-        ease: "power1.out",
+        duration: 0.25,
+        ease: "power1.in",
       },
       0
     )
@@ -37,10 +37,10 @@ menuItems.forEach((item) => {
       lowerText,
       {
         yPercent: -100,
-        duration: 0.2,
+        duration: 0.25,
         ease: "power1.in",
       },
-      ">"
+      0.17
     );
 
   item.addEventListener("mouseenter", () => timeline.play());

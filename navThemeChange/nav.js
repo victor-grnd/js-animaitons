@@ -5,14 +5,13 @@ function initCheckSectionThemeScroll() {
     return;
   }
 
-  const themeSections = document.querySelectorAll("[data-section]");
-
   const themeObserverOffset = navbar.offsetHeight / 2;
 
   let currentTheme = null;
 
   function checkThemeSection() {
-    for (const section of themeSections) {
+    const themeSections = document.querySelectorAll("[data-section]");
+    themeSections.forEach((section) => {
       const rect = section.getBoundingClientRect();
       const theme = section.getAttribute("data-section");
 
@@ -42,7 +41,7 @@ function initCheckSectionThemeScroll() {
 
         navbar.setAttribute("data-wf--nav--nav-position", variantName);
       }
-    }
+    });
   }
 
   checkThemeSection();
