@@ -9,8 +9,12 @@ function initCheckSectionThemeScroll() {
 
   let currentTheme = null;
 
+  function getSections(selector) {
+    return document.querySelectorAll(selector);
+  }
+
   function checkThemeSection() {
-    const themeSections = document.querySelectorAll("[data-section]");
+    const themeSections = getSections("[data-section]");
     themeSections.forEach((section) => {
       const rect = section.getBoundingClientRect();
       const theme = section.getAttribute("data-section");
