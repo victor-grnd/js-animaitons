@@ -43,15 +43,15 @@ function initButtonAnimation() {
 
     // Animation par segments avec des paliers
     if (progress < 0.3282275711) {
-      position = lerp(5, 95, progress / 0.3282275711);
+      position = lerp(10, 90, progress / 0.3282275711);
     } else if (progress < 0.5) {
-      position = 95;
+      position = 90;
     } else if (progress < 0.8282275711) {
-      position = lerp(95, 5, (progress - 0.5) / 0.3282275711);
+      position = lerp(90, 10, (progress - 0.5) / 0.3282275711);
     } else if (progress <= 1) {
-      position = 5;
+      position = 10;
     } else {
-      position = 5;
+      position = 10;
       start = now; // Recommencer l'animation
     }
 
