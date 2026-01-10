@@ -1,18 +1,18 @@
 class CursorEffect {
   constructor() {
-    (this.DOM = document.querySelector(".second-layer")),
-      (this.cursor = {
-        current: {
-          x: 0,
-          y: 0,
-        },
-        last: {
-          x: 0,
-          y: 0,
-        },
-        value: 40, // Initialisation à une taille par défaut
-        scroll: 0,
-      });
+    this.DOM = document.querySelector(".second-layer");
+    this.defaultValue = 60;
+    this.cursor = {
+      current: {
+        x: 0,
+        y: 0,
+      },
+      last: {
+        x: 0,
+        y: 0,
+      },
+      value: this.defaultValue,
+    };
 
     this.easing = 0.12; // Valeur pour la fluidité du mouvement du masque
 
@@ -29,7 +29,6 @@ class CursorEffect {
       "mousemove",
       this.handleMouseMoving.bind(this)
     );
-    document.addEventListener("scroll", this.onScroll.bind(this));
 
     document.querySelectorAll("[data-cursor-extend]").forEach((el) => {
       el.addEventListener("mouseenter", this.onEnterExtend.bind(this));
@@ -48,31 +47,27 @@ class CursorEffect {
     this.cursor.last.y = event.clientY;
   }
 
-  onScroll() {
-    this.cursor.scroll = window.scrollY;
-  }
-
   onEnterExtend() {
     gsap.to(this.cursor, {
       value: 450, // Ajustez cette valeur comme vous le souhaitez
       ease: "power3.out",
-      duration: 0.6,
+      duration: 0.4,
     });
   }
 
   onEnterContract() {
     gsap.to(this.cursor, {
-      value: 0,
+      value: 10,
       ease: "power3.out",
-      duration: 0.3,
+      duration: 0.4,
     });
   }
 
   onLeave() {
     gsap.to(this.cursor, {
-      value: 40, // Taille par défaut
+      value: this.defaultValue, // Taille par défaut
       ease: "power3.out",
-      duration: 0.6,
+      duration: 0.4,
     });
   }
 
@@ -103,7 +98,7 @@ class CursorEffect {
     this.DOM.style.setProperty("--x", `${this.cursor.current.x}px`);
     this.DOM.style.setProperty(
       "--y",
-      `${this.cursor.current.y + this.cursor.scroll}px`
+      `${this.cursor.current.y + window.scrollY}px`
     );
   }
 }
