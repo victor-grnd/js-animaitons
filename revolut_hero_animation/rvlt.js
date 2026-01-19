@@ -1,5 +1,7 @@
 const sectionTwo = document.querySelector(".rvlt_layer-two_wrap");
 const womanCard = document.querySelector(".rvlt_layer-two_bg");
+const whiteLayer = document.querySelector(".rvlt_layer-two_white");
+
 let animationIsPlaying = false;
 let rvltTl;
 let ticking = false;
@@ -10,9 +12,7 @@ let nextAnimationMustBeReversed = false;
 
 function getScrollDirection() {
   if (!lastScroll) lastScroll = 0;
-  console.log(lastScroll);
   currentScroll = window.scrollY;
-  console.log(currentScroll);
   if (currentScroll > lastScroll) {
     scrollDirectionIsForward = true;
   } else {
@@ -49,10 +49,14 @@ function getScrollThereshold() {
 }
 
 function initRevolutTimeline() {
+  if (!whiteLayer || !womanCard || !sectionTwo) {
+    return;
+  }
   rvltTl = gsap.timeline({
     paused: true,
     onStart: () => {
       animationIsPlaying = true;
+      whiteLayer.style.display = "none";
     },
     onComplete: () => {
       animationIsPlaying = false;
@@ -61,21 +65,21 @@ function initRevolutTimeline() {
     onReverseComplete: () => {
       animationIsPlaying = false;
       nextAnimationMustBeReversed = false;
+      whiteLayer.style.display = "block";
     },
   });
-
   rvltTl.fromTo(
     sectionTwo,
     {
       clipPath: "inset(20vh 34vw 15vh 34vw round 2rem)",
     },
     {
-      clipPath: "inset(0 0 0 0)",
-      duration: 1,
-      ease: "sine.out",
+      clipPath: "inset(0% 0% 0% 0%);",
+      duration: 0.5,
     },
     0,
   );
+
   rvltTl.fromTo(
     womanCard,
     {
@@ -83,7 +87,7 @@ function initRevolutTimeline() {
     },
     {
       scale: 0.5,
-      duration: 1,
+      duration: 0.7,
       ease: "sine.out",
     },
     0,
