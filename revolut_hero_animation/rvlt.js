@@ -48,31 +48,14 @@ function getScrollThreshold() {
 }
 
 function initRevolutTimeline() {
-  if (!womanCard || !sectionTwo || !cardsWrapper) {
-    return;
-  }
+  if (!womanCard || !sectionTwo || !cardsWrapper) return;
   if (animationIsPlaying) return;
+
   if (!isInitialized) {
     rvltTl = gsap.timeline({
       paused: true,
       onStart: () => {
         animationIsPlaying = true;
-        /*const initialState = Flip.getState(womanCard);
-
-        if (scrollDirectionIsForward) {
-          womanCard.classList.add("is-card");
-          const firstCard = cardsWrapper.firstElementChild;
-          if (firstCard) {
-            firstCard.after(womanCard);
-          } else {
-            cardsWrapper.appendChild(womanCard);
-          }
-
-          Flip.from(initialState, {
-            duration: 1,
-            ease: "power1.in",
-          })
-        }*/
       },
       onComplete: () => {
         animationIsPlaying = false;
@@ -81,39 +64,39 @@ function initRevolutTimeline() {
       onReverseComplete: () => {
         animationIsPlaying = false;
         nextAnimationMustBeReversed = false;
-        /*const reverseInitialState = Flip.getState(womanCard);
-
-        womanCard.classList.remove("is-card");
-        sectionTwo.appendChild(womanCard);
-
-        // Flip back to original position
-        Flip.from(reverseInitialState, {
-          duration: 1,
-          ease: "power1.out",
-        });*/
       },
     });
 
     // Mask animation
     rvltTl.fromTo(
       sectionTwo,
-      {
-        maskSize: "45vh 70vh",
-      },
-      {
-        maskSize: "100% 100%",
-        duration: 0.5,
-        ease: "power1.in",
-      },
+      { maskSize: "45vh 70vh" },
+      { maskSize: "100% 100%", duration: 0.5, ease: "power1.in" },
       0,
     );
 
     isInitialized = true;
   }
 
+  // Do Flip BEFORE playing/reversing timeline
+  const state = Flip.getState(womanCard);
+
   if (scrollDirectionIsForward) {
+    // Make DOM changes
+    cardsWrapper.appendChild(womanCard);
+
+    womanCard.classList.add("is-card");
+
+    // Animate the flip
+    Flip.from(state, { duration: 1, ease: "power1.in" });
     rvltTl.play();
   } else {
+    // Reverse changes
+    womanCard.classList.remove("is-card");
+    sectionTwo.appendChild(womanCard);
+
+    // Animate the flip
+    Flip.from(state, { duration: 1, ease: "power1.out" });
     rvltTl.reverse();
   }
 }
