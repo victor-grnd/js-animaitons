@@ -79,16 +79,23 @@ function initRevolutTimeline() {
   }
 
   // Do Flip BEFORE playing/reversing timeline
-  const state = Flip.getState(womanCard);
+  const state = Flip.getState(womanCard, {
+    props: "borderRadius, transform",
+  });
 
   if (scrollDirectionIsForward) {
     // Make DOM changes
-    cardsWrapper.appendChild(womanCard);
 
     womanCard.classList.add("is-card");
+    cardsWrapper.appendChild(womanCard);
 
     // Animate the flip
-    Flip.from(state, { duration: 1, ease: "power1.in" });
+    Flip.from(state, {
+      duration: 1,
+      ease: "power1.in",
+      nested: true,
+      scale: true,
+    });
     rvltTl.play();
   } else {
     // Reverse changes
