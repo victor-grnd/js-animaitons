@@ -71,8 +71,8 @@ function initButtonAnimation() {
     const existingState = animationStates.get(button);
 
     if (existingState) {
-      cancelAnimationFrame(existingState.r2); // r2 correspond ici a l'id et pas au deg
-      cancelAnimationFrame(existingState.x);
+      cancelAnimationFrame(existingState.r2); // r2 correspond to the map id and not to thes css property
+      cancelAnimationFrame(existingState.x); // the same for x
     }
 
     animateRotation(button, 6000, Date.now());
