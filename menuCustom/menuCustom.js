@@ -1,5 +1,5 @@
-const openButton = document.querySelector(".hero_script_open");
-const menuWrap = document.querySelector(".hero_script_menu_wrap");
+/*const openButton = document.querySelector(".hero_script_open");
+
 const menuItems = document.querySelectorAll(".hero_script_item_wrap");
 
 // Validate required elements exist
@@ -45,4 +45,46 @@ menuItems.forEach((item) => {
 
   item.addEventListener("mouseenter", () => timeline.play());
   item.addEventListener("mouseleave", () => timeline.reverse());
+});*/
+
+//------------------------------v2--------------------------------------
+const menuWrap = document.querySelector(".hero_script_menu_wrap");
+const openButton = document.querySelector(".hero_script_open");
+const openText = document.querySelector(".hero_script_label");
+let isOpen = false;
+
+function changeLabel() {
+  console.log(openText.textContent);
+  const textToSet = !isOpen ? "OPEN" : "CLOSE";
+  openText.textContent = textToSet;
+  isOpen = !isOpen;
+}
+
+function fadeInMenu() {
+  const menuTl = gsap.timeline({ paused: true });
+
+  menuTl.fromTo(
+    menuWrap,
+    {
+      opacity: 0,
+      y: "6rem",
+    },
+    {
+      opacity: 1,
+      y: "0rem",
+      ease: "power1.inOut",
+      duration: 0.5,
+    },
+  );
+
+  if (!isOpen) {
+    menuTl.play();
+  } else {
+    menuTl.reverse();
+  }
+}
+
+openButton.addEventListener("click", () => {
+  changeLabel();
+  fadeInMenu();
 });
