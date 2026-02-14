@@ -46,24 +46,22 @@ menuItems.forEach((item) => {
   item.addEventListener("mouseenter", () => timeline.play());
   item.addEventListener("mouseleave", () => timeline.reverse());
 });*/
-
 //------------------------------v2--------------------------------------
 const menuWrap = document.querySelector(".hero_script_menu_wrap");
 const openButton = document.querySelector(".hero_script_open");
 const openText = document.querySelector(".hero_script_label");
-let isOpen = false;
+let isOpen = true;
 
 function changeLabel() {
-  console.log(openText.textContent);
-  const textToSet = !isOpen ? "OPEN" : "CLOSE";
+  const textToSet = isOpen ? "CLOSE" : "OPEN";
   openText.textContent = textToSet;
   isOpen = !isOpen;
 }
 
 function fadeInMenu() {
-  const menuTl = gsap.timeline({ paused: true });
+  const menuTlIn = gsap.timeline({ paused: true });
 
-  menuTl.fromTo(
+  menuTlIn.fromTo(
     menuWrap,
     {
       opacity: 0,
@@ -77,10 +75,26 @@ function fadeInMenu() {
     },
   );
 
+  const menuTlOut = gsap.timeline({ paused: true });
+
+  menuTlOut.fromTo(
+    menuWrap,
+    {
+      opacity: 1,
+      y: "0rem",
+    },
+    {
+      opacity: 0,
+      y: "6rem",
+      ease: "power1.inOut",
+      duration: 0.5,
+    },
+  );
+
   if (!isOpen) {
-    menuTl.play();
+    menuTlIn.play();
   } else {
-    menuTl.reverse();
+    menuTlOut.play();
   }
 }
 
